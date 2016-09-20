@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Dig\ApiBundle\DigApiBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

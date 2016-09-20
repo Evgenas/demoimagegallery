@@ -1,0 +1,15 @@
+default:
+    suites:
+        api_features:
+            paths:
+                - %paths.base%/features/API/
+            contexts:
+                - ApiFeatureContext:
+                     - http://127.0.0.1:8000
+            filters:
+                tags: ~@skip
+    formatters:
+        pretty: ~
+
+    extensions:
+        Behat\Symfony2Extension: ~
