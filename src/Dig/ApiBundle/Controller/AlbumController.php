@@ -8,6 +8,7 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\Get;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * @Route("/album")
@@ -17,7 +18,7 @@ class AlbumController extends FOSRestController
     /**
      * Get images by album.
      *
-     * ApiDoc(
+     * @ApiDoc(
      *   section = "Albums",
      *   description = "Get images by album id with pagination",
      *   resource = true,
