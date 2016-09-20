@@ -50,9 +50,10 @@ class AlbumController extends FOSRestController
             throw new NotFoundHttpException(sprintf('Entity with id %d not found.', $id));
         }
 
-        $images = $manager->getAlbumImages($id, $page);
+        $paging = $manager->getAlbumImages($id, $page);
+        $paging->setName($album->getName());
 
-        $answer['album'] = $images;
+        $answer['album'] = $paging;
 
         return $answer;
     }

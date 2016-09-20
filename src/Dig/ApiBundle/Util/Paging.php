@@ -5,6 +5,11 @@ namespace Dig\ApiBundle\Util;
 class Paging
 {
     /**
+     * @var string
+     */
+    private $name;
+
+    /**
      * @var int
      */
     private $current;
@@ -23,6 +28,14 @@ class Paging
      * @var array
      */
     private $records;
+
+    /**
+     * @param string
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 
     /**
      * @param int $current
