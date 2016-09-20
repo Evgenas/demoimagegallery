@@ -22,13 +22,20 @@
         "sensio/distribution-bundle": "~5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
+        "friendsofsymfony/rest-bundle": "^2.1",
         "jms/serializer-bundle": "^1.1",
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "doctrine/doctrine-migrations-bundle": "^1.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
-        "symfony/phpunit-bridge": "~2.7"
+        "symfony/phpunit-bridge": "~2.7",
+        "phpspec/phpspec": "^2.5",
+        "memio/spec-gen": "^0.4",
+        "behat/behat": "3.0.*",
+        "behat/symfony2-extension": "~2.0",
+        "guzzlehttp/guzzle": "^6.2",
+        "linio/behat-web-api-extension": "^1.2"
     },
     "scripts": {
         "symfony-scripts": [
