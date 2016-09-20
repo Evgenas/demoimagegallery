@@ -1,0 +1,4 @@
+services:
+#    dig_api.example:
+#        class: Dig\ApiBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
