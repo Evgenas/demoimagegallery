@@ -1,4 +1,4 @@
 services:
-#    dig_api.example:
-#        class: Dig\ApiBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
+  dig.album.manager:
+      class: Dig\ApiBundle\Service\AlbumManager
+      arguments: [@knp_paginator, @doctrine.orm.entity_manager]

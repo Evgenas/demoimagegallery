@@ -12,7 +12,7 @@ class AlbumManagerSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('DigApiBundle\Service\AlbumManager');
+        $this->shouldHaveType('Dig\ApiBundle\Service\AlbumManager');
     }
 
     function let(Paginator $paginator, ObjectManager $entityManager, ImageRepository $repo)
