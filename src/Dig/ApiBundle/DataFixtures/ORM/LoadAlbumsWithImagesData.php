@@ -22,7 +22,26 @@ class LoadAlbumsWithImagesData extends AbstractFixture implements OrderedFixture
                 '5.jpg',
             ],
         ],
-
+        1 => [
+            'id' => 2,
+            'name' => 'Album 2',
+            'images' => 'randImages(20)',
+        ],
+        2 => [
+            'id' => 3,
+            'name' => 'Album 3',
+            'images' => 'randImages(22)',
+        ],
+        3 => [
+            'id' => 4,
+            'name' => 'Album 4',
+            'images' => 'randImages(22)',
+        ],
+        4 => [
+            'id' => 5,
+            'name' => 'Album 3',
+            'images' => 'randImages(30)',
+        ],
     ];
 
     public function getOrder()
@@ -35,7 +54,7 @@ class LoadAlbumsWithImagesData extends AbstractFixture implements OrderedFixture
      */
     public function load(ObjectManager $manager)
     {
-        #despite of generator is reset with schema recreate action, we will stick to defined ids via direct setter (important for Behat tests)
+        //despite of the autoincrement generator is reset with schema recreate action, we will stick to defined ids via direct setter (important for Behat tests)
         $metadata = $manager->getClassMetaData('Dig\ApiBundle\Entity\Album');
         $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
 
@@ -57,7 +76,14 @@ class LoadAlbumsWithImagesData extends AbstractFixture implements OrderedFixture
         $album->setId($albumData['id']);
         $album->setName($albumData['name']);
 
-        if (!empty($albumData['images'])) {
+        if (!is_array($albumData['images']) && preg_match('/randImages\((\d+)\)/', $albumData['images'], $m)) {
+            $albumData['images'] = [];
+            for ($i = 0; $i < $m[1]; ++$i) {
+                $albumData['images'][] = rand(1, 100).'.jpg';
+            }
+        }
+
+        if (is_array($albumData['images'])) {
             foreach ($albumData['images'] as $imageName) {
                 $image = new Image();
                 $image->setFileName($imageName);
