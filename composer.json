@@ -1,10 +1,11 @@
 {
     "name": "jekccs/demoimagegallery",
+    "description": "Demo Image Gallery",
     "license": "proprietary",
     "type": "project",
     "autoload": {
         "psr-4": {
-            "": "src/"
+            "Dig\\": "src/Dig"
         },
         "classmap": [
             "app/AppKernel.php",
