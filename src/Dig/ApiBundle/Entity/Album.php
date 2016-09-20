@@ -29,7 +29,7 @@ class Album
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Image", mappedBy="image")
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="image", cascade={"persist", "remove" })
      */
     private $images;
 
@@ -39,6 +39,20 @@ class Album
     public function __construct()
     {
         $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set id (used to stick defined id at fixtures).
+     *
+     * @param int
+     *
+     * @return int
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
