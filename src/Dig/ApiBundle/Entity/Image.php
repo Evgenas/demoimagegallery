@@ -3,12 +3,15 @@
 namespace Dig\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Image.
  *
  * @ORM\Table(name="image")
  * @ORM\Entity(repositoryClass="Dig\ApiBundle\Repository\ImageRepository")
+ *
+ * @JMS\ExclusionPolicy("all")
  */
 class Image
 {
@@ -18,6 +21,9 @@ class Image
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @JMS\Expose
+     * @JMS\Type("integer")
      */
     private $id;
 
@@ -25,6 +31,9 @@ class Image
      * @var string
      *
      * @ORM\Column(name="file_name", type="string", length=100)
+     *
+     * @JMS\Expose
+     * @JMS\Type("string")
      */
     private $fileName;
 
