@@ -15,20 +15,11 @@ class ApiFeatureContext extends WebApiContext implements KernelAwareContext, Sni
     private static $feature;
 
     /**
-     * @param null   $baseUri
-     * @param string $apiUsername
-     * @param string $apiPassword
-     * @param bool   $verifySSL
-     *
-     * @throws \InvalidArgumentException
+     * @param string $baseUri
      */
-    public function __construct($baseUri, $apiUsername, $apiPassword, $verifySSL = false)
+    public function __construct($baseUri)
     {
-        $parameters = ['verify' => $verifySSL];
-
-        if (null !== $baseUri) {
-            $parameters['base_uri'] = $baseUri;
-        }
+        $parameters['base_uri'] = $baseUri;
         $this->setClient(new Client($parameters));
     }
 
