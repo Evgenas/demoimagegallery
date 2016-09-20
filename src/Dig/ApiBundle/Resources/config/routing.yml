@@ -1,0 +1,5 @@
+api_get_album_v1:
+    resource: "@DigApiBundle/Controller/AlbumController.php"
+    type:     annotation
+    prefix:   /v1
+    defaults: {_format:json}

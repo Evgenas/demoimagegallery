@@ -6,6 +6,7 @@ use Behat\WebApiExtension\Context\WebApiContext;
 use GuzzleHttp\Client;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use PHPUnit_Framework_Assert as Assertions;
 
 class ApiFeatureContext extends WebApiContext implements KernelAwareContext, SnippetAcceptingContext
 {
@@ -91,6 +92,25 @@ class ApiFeatureContext extends WebApiContext implements KernelAwareContext, Sni
     public function theResponseShouldBeJson()
     {
         $this->theResponseHeaderShouldBe('content-type', 'application/json');
+    }
+
+    /**
+     * Checks that response header have valid header and value.
+     *
+     * @param string $header
+     * @param string $value
+     *
+     * @throws \RuntimeException
+     *
+     * @Then /^(?:the )?response header "([^"]+)" should be "([^"]+)"$/
+     */
+    public function theResponseHeaderShouldBe($header, $value)
+    {
+        if (!$this->response->getHeader($header)) {
+            throw new \RuntimeException(sprintf("Can't find header with name: %s", $header));
+        }
+
+        Assertions::assertEquals($value, $this->response->getHeader($header)[0]);
     }
 
     /**

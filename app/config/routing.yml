@@ -1,4 +1,3 @@
 dig_api:
-    resource: "@DigApiBundle/Controller/"
-    type:     annotation
-    prefix:   /
+    resource: "@DigApiBundle/Resources/config/routing.yml"
+    prefix:   /api
