@@ -25,37 +25,27 @@ class AlbumController extends FOSRestController
      *   output="Gis\ApiBundle\Entity\Album",
      *   statusCodes = {
      *     200 = "List of all images in album",
-     *     204 = "No content. Nothing to list.",
      *     404 = "Album is not found."
      *   }
      * )
      *
-     * @QueryParam(
-     *   name="id",
-     *   requirements="\d+",
-     *   nullable=false,
-     *   description="Album id"
-     * )
-     * @QueryParam(
-     *   name="page",
-     *   requirements="\d+",
-     *   nullable=true,
-     *   default="1",
-     *   description="Requested page in album"
-     * )
+     * @Get("/{id}", requirements={"id": "\d+"})
+     * @Get("/{id}/page/{page}", requirements={ "id": "\d+", "page": "\d+"})
      *
-     * @Get("/{id}")
-     * @Get("/{id}/page/{page}")
+     * @Rest\View(serializerEnableMaxDepthChecks=false)
      *
-     * @Rest\View(serializerEnableMaxDepthChecks=true)
-     *
-     * @param ParamFetcherInterface $paramFetcher
+     * @param int $id
+     * @param int $page
      *
      * @return Response
      */
-    public function getAlbumAction(ParamFetcherInterface $paramFetcher)
+    public function getAlbumAction($id, $page = 1)
     {
-        $answer['album'] = [];
+        /** @var $manager\Dig\ApiBundle\Service\AlbumManager */
+        $manager = $this->container->get('dig.album.manager');
+        $images = $manager->getAlbumImages($id, $page);
+
+        $answer['album'] = $images;
 
         return $answer;
     }

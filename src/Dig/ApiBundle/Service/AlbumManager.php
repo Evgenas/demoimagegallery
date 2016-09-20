@@ -7,6 +7,8 @@ use Knp\Component\Pager\Paginator;
 
 class AlbumManager
 {
+    const IMAGES_PER_PAGE = 10;
+
     /**
      * @var Paginator
      */
@@ -29,8 +31,12 @@ class AlbumManager
      *
      * @return array
      */
-    public function getAlbumWithImages($albumId, $page)
+    public function getAlbumImages($albumId, $page)
     {
-        return ['album' => []];
+        $offset = $page * self::IMAGES_PER_PAGE;
+        $repo = $this->em->getRepository("DigApiBundle:Image");
+        $result = $repo->getAlbumWithImagesSearchQuery($albumId, self::IMAGES_PER_PAGE, $offset);
+
+        return ['images' =>  array_values($result)];
     }
 }

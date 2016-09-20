@@ -10,4 +10,16 @@ namespace Dig\ApiBundle\Repository;
  */
 class ImageRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAlbumWithImagesSearchQuery($albumId, $offset, $limit)
+    {
+        $qb = $this->createQueryBuilder('i')
+            ->select('i')
+            ->leftJoin('i.album', 'a')
+            ->where('a.id = :albumId')
+            //->setFirstResult($offset)
+           // ->setMaxResults($limit)
+            ->setParameter('albumId', $albumId);
+
+        return $qb->getQuery()->getResult();
+    }
 }
