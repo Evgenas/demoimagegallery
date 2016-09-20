@@ -9,6 +9,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\Paginator;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Doctrine\ORM\Query;
 
 class AlbumManagerSpec extends ObjectBehavior
 {
@@ -20,12 +21,18 @@ class AlbumManagerSpec extends ObjectBehavior
         $this->shouldHaveType('Dig\ApiBundle\Service\AlbumManager');
     }
 
-    function let(Paginator $paginator, ObjectManager $entityManager, ImageRepository $repo, Image $image)
+    function let(
+        Paginator $paginator,
+        ObjectManager $entityManager,
+        ImageRepository $repo,
+        Image $image,
+        Query $searchQuery
+    )
     {
         $image->getId()->willReturn(1);
 
-        $repo->getAlbumWithImagesSearchQuery(self::TEST_ALBUM_ID, AlbumManager::IMAGES_PER_PAGE, AlbumManager::IMAGES_PER_PAGE * self::FIRST_PAGE_NUMBER)
-             ->willReturn([$image]);
+        $repo->getAlbumWithImagesSearchQuery(self::TEST_ALBUM_ID)
+             ->willReturn($searchQuery);
         $entityManager->getRepository("DigApiBundle:Image")->willReturn($repo);
         $this->beConstructedWith($paginator, $entityManager);
     }

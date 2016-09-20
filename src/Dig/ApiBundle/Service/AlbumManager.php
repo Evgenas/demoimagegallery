@@ -34,9 +34,9 @@ class AlbumManager
     public function getAlbumImages($albumId, $page)
     {
         $offset = $page * self::IMAGES_PER_PAGE;
-        $repo = $this->em->getRepository("DigApiBundle:Image");
-        $result = $repo->getAlbumWithImagesSearchQuery($albumId, self::IMAGES_PER_PAGE, $offset);
+        $repo = $this->em->getRepository('DigApiBundle:Image');
+        $result = $repo->getAlbumWithImagesSearchQuery($albumId);
 
-        return ['images' =>  array_values($result)];
+        return ['images' => array_values($result)];
     }
 }
