@@ -2,6 +2,7 @@
 
 namespace Dig\ApiBundle\Service;
 
+use Dig\ApiBundle\Entity\Album;
 use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\Paginator;
 use Dig\ApiBundle\Util\Paging;
@@ -47,5 +48,15 @@ class AlbumManager
         $result->setRecords($pagination->getItems());
 
         return $result;
+    }
+
+    /**
+     * @param int $albumId
+     *
+     * @return Album
+     */
+    public function getAlbum($albumId)
+    {
+        return $this->em->getRepository('DigApiBundle:Album')->find($albumId);
     }
 }

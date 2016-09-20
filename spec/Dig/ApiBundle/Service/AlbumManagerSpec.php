@@ -2,14 +2,15 @@
 
 namespace spec\Dig\ApiBundle\Service;
 
+use Dig\ApiBundle\Entity\Album;
 use Dig\ApiBundle\Entity\Image;
+use Dig\ApiBundle\Repository\AlbumRepository;
 use Dig\ApiBundle\Repository\ImageRepository;
 use Dig\ApiBundle\Service\AlbumManager;
 use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\Paginator;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-#use Doctrine\ORM\Query;
 use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
 
 class AlbumManagerSpec extends ObjectBehavior
@@ -25,7 +26,8 @@ class AlbumManagerSpec extends ObjectBehavior
     function let(
         Paginator $paginator,
         ObjectManager $entityManager,
-        ImageRepository $repo,
+        ImageRepository $imageRepo,
+        AlbumRepository $albumRepo,
         Image $image,
         SlidingPagination $pagination
     )
@@ -34,17 +36,24 @@ class AlbumManagerSpec extends ObjectBehavior
         $pagination->getTotalItemCount()->willReturn(1);
         $pagination->getItems()->willreturn([$image]);
 
-        // it is impossible to mock final class
-        //$repo->getAlbumWithImagesSearchQuery(self::TEST_ALBUM_ID)
-        //      ->willReturn($searchQuery);
-
-        $entityManager->getRepository("DigApiBundle:Image")->willReturn($repo);
+        // it is impossible to mock final class of Doctrine\ORM\Query so using Argument::any
+        // @link: https://github.com/phpspec/prophecy/issues/102
+        //$iamgeRepo->getAlbumWithImagesSearchQuery(self::TEST_ALBUM_ID)->willReturn($searchQuery);
         $paginator->paginate(Argument::any(), self::FIRST_PAGE_NUMBER, AlbumManager::IMAGES_PER_PAGE)->willReturn($pagination);
+
+        $entityManager->getRepository("DigApiBundle:Image")->willReturn($imageRepo);
+        $entityManager->getRepository("DigApiBundle:Album")->willReturn($albumRepo);
 
         $this->beConstructedWith($paginator, $entityManager);
     }
 
-    function it_return_album_images()
+    function it_returns_album_by_its_id(AlbumRepository $albumRepo, Album $album)
+    {
+        $albumRepo->find(self::TEST_ALBUM_ID)->willReturn($album);
+        $this->getAlbum(self::TEST_ALBUM_ID)->shouldBeAnInstanceOf('\Dig\ApiBundle\Entity\Album');
+    }
+
+    function it_returns_album_images_paginated()
     {
         $this->getAlbumImages(self::TEST_ALBUM_ID, self::FIRST_PAGE_NUMBER)->shouldBeAnInstanceOf('\Dig\ApiBundle\Util\Paging');
     }

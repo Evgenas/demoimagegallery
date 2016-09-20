@@ -7,6 +7,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\Get;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @Route("/album")
@@ -35,12 +36,20 @@ class AlbumController extends FOSRestController
      * @param int $id
      * @param int $page
      *
+     * @throws NotFoundHttpException
+     *
      * @return Response
      */
     public function getAlbumAction($id, $page = 1)
     {
         /** @var $manager\Dig\ApiBundle\Service\AlbumManager */
         $manager = $this->container->get('dig.album.manager');
+        $album = $manager->getAlbum($id);
+
+        if (!$album) {
+            throw new NotFoundHttpException(sprintf('Entity with id %d not found.', $id));
+        }
+
         $images = $manager->getAlbumImages($id, $page);
 
         $answer['album'] = $images;

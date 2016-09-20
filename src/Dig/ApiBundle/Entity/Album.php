@@ -3,12 +3,15 @@
 namespace Dig\ApiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Album.
  *
  * @ORM\Table(name="album")
  * @ORM\Entity(repositoryClass="Dig\ApiBundle\Repository\AlbumRepository")
+ *
+ * @JMS\ExclusionPolicy("all")
  */
 class Album
 {
@@ -25,6 +28,9 @@ class Album
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=100)
+     *
+     * @JMS\Expose
+     * @JMS\Type("string")
      */
     private $name;
 
