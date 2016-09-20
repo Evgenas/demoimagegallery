@@ -4,6 +4,7 @@ namespace Dig\ApiBundle\Service;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\Paginator;
+use Dig\ApiBundle\Util\Paging;
 
 class AlbumManager
 {
@@ -33,10 +34,18 @@ class AlbumManager
      */
     public function getAlbumImages($albumId, $page)
     {
-        $offset = $page * self::IMAGES_PER_PAGE;
         $repo = $this->em->getRepository('DigApiBundle:Image');
-        $result = $repo->getAlbumWithImagesSearchQuery($albumId);
+        $query = $repo->getAlbumWithImagesSearchQuery($albumId);
+        $pagination = $this->paginator->paginate($query, $page, self::IMAGES_PER_PAGE);
+        $currentPage = $pagination->getCurrentPageNumber();
+        $previous = 1 === $currentPage ? 1 : $currentPage - 1;
+        $next = $pagination->getTotalItemCount() > (self::IMAGES_PER_PAGE * $page) ? $currentPage + 1 : $currentPage;
+        $result = new Paging();
+        $result->setCurrent($currentPage);
+        $result->setNext($next);
+        $result->setPrevious($previous);
+        $result->setRecords($pagination->getItems());
 
-        return ['images' => array_values($result)];
+        return $result;
     }
 }
