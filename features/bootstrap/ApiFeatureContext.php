@@ -128,4 +128,16 @@ class ApiFeatureContext extends WebApiContext implements KernelAwareContext, Sni
             json_encode(json_decode($response->getBody()), JSON_PRETTY_PRINT)
         );
     }
+
+    /**
+     * Checks that response body contains specific text.
+     *
+     * @param string $text
+     *
+     * @Then /^(?:the )?response should contain '([^']+)'$/
+     */
+    public function theResponseShouldContain2($text)
+    {
+        parent::theResponseShouldContain($text);
+    }
 }

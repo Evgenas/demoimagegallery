@@ -21,7 +21,7 @@ class AlbumController extends FOSRestController
      *      {"id":"4","name":"Album 4"},
      *      {"id":"5","name":"Album 3"}
      * ]}
-     * 
+     *
      * @ApiDoc(
      *   section = "Albums",
      *   description = "Get all albums",

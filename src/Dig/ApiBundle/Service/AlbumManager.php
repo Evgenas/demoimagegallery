@@ -38,8 +38,8 @@ class AlbumManager
         $repo = $this->em->getRepository('DigApiBundle:Image');
         $query = $repo->getAlbumWithImagesSearchQuery($albumId);
         $pagination = $this->paginator->paginate($query, $page, self::IMAGES_PER_PAGE);
-        $currentPage = $pagination->getCurrentPageNumber();
-        $previous = 1 === $currentPage ? 1 : $currentPage - 1;
+        $currentPage = (int) $pagination->getCurrentPageNumber();
+        $previous = (int) (1 === $currentPage ? 1 : $currentPage - 1);
         $next = $pagination->getTotalItemCount() > (self::IMAGES_PER_PAGE * $page) ? $currentPage + 1 : $currentPage;
         $result = new Paging();
         $result->setCurrent($currentPage);
