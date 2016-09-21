@@ -15,7 +15,7 @@ use JMS\Serializer\Annotation as JMS;
  */
 class Image
 {
-    const RELATIVE_ROOT_FILE_PATH = 'images/';
+    const RELATIVE_ROOT_FILE_PATH = '/images/';
 
     /**
      * @var int
@@ -36,6 +36,8 @@ class Image
      *
      * @JMS\Expose
      * @JMS\Type("string")
+     * @JMS\Accessor(getter="getFileUri")
+     * @JMS\SerializedName("image_uri")
      */
     private $fileName;
 
