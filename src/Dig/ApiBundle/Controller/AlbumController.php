@@ -5,16 +5,15 @@ namespace Dig\ApiBundle\Controller;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\Get;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AlbumController extends FOSRestController
 {
     /**
-     * Get all albums
+     * Get all albums.
      *
-      * @ApiDoc(
+     * @ApiDoc(
      *   section = "Albums",
      *   description = "Get all albums",
      *   resource = true,
@@ -74,7 +73,7 @@ class AlbumController extends FOSRestController
      *
      * @Rest\View()
      *
-     * @param int $id Album id
+     * @param int $id   Album id
      * @param int $page Requested page in album
      *
      * @throws NotFoundHttpException
@@ -90,7 +89,7 @@ class AlbumController extends FOSRestController
         if (!$album) {
             throw new NotFoundHttpException(sprintf('Entity with id %d not found.', $id));
         }
-        
+
         $paging = $manager->getAlbumImages($id, $page);
         $paging->setName($album->getName());
         $answer['album'] = $paging;
