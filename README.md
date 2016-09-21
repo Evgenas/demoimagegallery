@@ -51,4 +51,6 @@ master: ![Preview](https://travis-ci.org/Evgenas/demoimagegallery.svg?branch=mas
 
 As code analizer was used InsightSensiolabs
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/1b2652ee-aacb-4e4f-bbf7-2e7c9cf70dde/big.png)](https://insight.sensiolabs.com/projects/1b2652ee-aacb-4e4f-bbf7-2e7c9cf70dde)
+
 [Analyze Result](https://insight.sensiolabs.com/projects/1b2652ee-aacb-4e4f-bbf7-2e7c9cf70dde)
