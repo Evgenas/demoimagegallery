@@ -9,32 +9,73 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-/**
- * @Route("/album")
- */
 class AlbumController extends FOSRestController
 {
     /**
+     * Get all albums
+     *
+      * @ApiDoc(
+     *   section = "Albums",
+     *   description = "Get all albums",
+     *   resource = true,
+     *   output="Gis\ApiBundle\Entity\Album",
+     *   statusCodes = {
+     *     200 = "List of all albums",
+     *   }
+     * )
+     *
+     * @Get("/")
+     *
+     * @Rest\View()
+     *
+     * @return Response
+     */
+    public function getAlbumsAction()
+    {
+        /** @var $manager\Dig\ApiBundle\Service\AlbumManager */
+        $manager = $this->container->get('dig.album.manager');
+        $answer['albums'] = $manager->getAlbums();
+
+        return $answer;
+    }
+
+    /**
      * Get images by album.
+     *
+     * Response example:
+     *
+     *  {"album":
+     *      {"name":"Album 1",
+     *       "current":"1",
+     *       "next":"1",
+     *       "previous":0,
+     *       "records":[
+     *          {"id":1,"file_name":"1.jpg"},
+     *          {"id":2,"file_name":"2.jpg"},
+     *          {"id":3,"file_name":"3.jpg"},
+     *          {"id":4,"file_name":"4.jpg"},
+     *          {"id":5,"file_name":"5.jpg"}
+     *       ]}}
+     *
      *
      * @ApiDoc(
      *   section = "Albums",
      *   description = "Get images by album id with pagination",
      *   resource = true,
-     *   output="Gis\ApiBundle\Entity\Album",
+     *   output="Gis\ApiBundle\Utility\Paging",
      *   statusCodes = {
      *     200 = "List of all images in album",
      *     404 = "Album is not found."
      *   }
      * )
      *
-     * @Get("/{id}", requirements={"id": "\d+"})
-     * @Get("/{id}/page/{page}", requirements={ "id": "\d+", "page": "\d+"})
+     * @Get("/album/{id}", requirements={"id": "\d+"})
+     * @Get("/album/{id}/page/{page}", requirements={ "id": "\d+", "page": "\d+"})
      *
-     * @Rest\View(serializerEnableMaxDepthChecks=false)
+     * @Rest\View()
      *
-     * @param int $id
-     * @param int $page
+     * @param int $id Album id
+     * @param int $page Requested page in album
      *
      * @throws NotFoundHttpException
      *
@@ -49,10 +90,9 @@ class AlbumController extends FOSRestController
         if (!$album) {
             throw new NotFoundHttpException(sprintf('Entity with id %d not found.', $id));
         }
-
+        
         $paging = $manager->getAlbumImages($id, $page);
         $paging->setName($album->getName());
-
         $answer['album'] = $paging;
 
         return $answer;

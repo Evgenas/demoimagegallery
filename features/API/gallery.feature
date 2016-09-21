@@ -4,6 +4,9 @@ Feature: Image gallery
   I want to be able to view albums and images in selected album
 
   Scenario: View all albums
+    When I send a GET request to "/api/v1"
+    Then the response should be OK
+    Then the response should be JSON
 
   Scenario: View images in album first page
     When I send a GET request to "/api/v1/album/1"
