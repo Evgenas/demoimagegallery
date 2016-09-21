@@ -36,7 +36,7 @@
            
     <!-- Own Targets -->
     <target name="build-ci" description="Builds the project  for the continuous integration server"
-            depends="clean,prepare,composer-validate,dependencies-install,check-environment,phpcs-ci,symfony-doctrine-schema-recreate,symfony-cache-clear-test,phpspec,behat"/>
+            depends="clean,prepare,composer-validate,dependencies-install,check-environment,symfony-doctrine-schema-recreate,symfony-cache-clear-test,phpspec,behat"/>
 
     <target name="behat" description="Run behat test">
         <exec command="${project.dir-bin}/behat --config behat.yml.dist" passthru="true" checkreturn="true" logoutput="true"/>
