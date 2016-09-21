@@ -30,6 +30,8 @@ framework:
         handler_id:  ~
     fragments:       ~
     http_method_override: true
+    session:
+        name:        "DIGSESSION"
 
 # Twig Configuration
 twig:
