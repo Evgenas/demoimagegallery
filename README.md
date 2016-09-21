@@ -32,3 +32,12 @@ $bin/behat
 
 ![Preview](http://i.imgur.com/2qyIf2z.png)
 
+##Continuous Integration Flow
+
+The flow is configured for minimal CI process, requires [Phing](https://www.phing.info/) installed
+
+```bash
+$phing build-ci
+```
+
+
