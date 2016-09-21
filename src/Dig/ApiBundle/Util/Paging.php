@@ -46,11 +46,27 @@ class Paging
     }
 
     /**
+     * @return int
+     */
+    public function getCurrent()
+    {
+        return $this->current;
+    }
+
+    /**
      * @param int $next
      */
     public function setNext($next)
     {
         $this->next = $next;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNext()
+    {
+        return $this->next;
     }
 
     /**
@@ -62,10 +78,26 @@ class Paging
     }
 
     /**
+     * @return int
+     */
+    public function getPrevious()
+    {
+        return $this->previous;
+    }
+
+    /**
      * @param array $records
      */
     public function setRecords($records)
     {
         $this->records = $records;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRecords()
+    {
+        return $this->records;
     }
 }

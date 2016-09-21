@@ -51,12 +51,15 @@ class AlbumManagerSpec extends ObjectBehavior
     function it_returns_list_of_all_albums(AlbumRepository $albumRepo, Album $album)
     {
         $albumRepo->findAll()->willReturn([$album]);
+
         $this->getAlbums()->shouldBeArray();
+        $this->getAlbums()->shouldHaveAlbums();
     }
 
     function it_returns_album_by_its_id(AlbumRepository $albumRepo, Album $album)
     {
         $albumRepo->find(self::TEST_ALBUM_ID)->willReturn($album);
+
         $this->getAlbum(self::TEST_ALBUM_ID)->shouldBeAnInstanceOf('\Dig\ApiBundle\Entity\Album');
     }
 
@@ -69,5 +72,36 @@ class AlbumManagerSpec extends ObjectBehavior
         $pagination->getItems()->shouldBeCalled();
 
         $this->getAlbumImages(self::TEST_ALBUM_ID, self::FIRST_PAGE_NUMBER)->shouldBeAnInstanceOf('\Dig\ApiBundle\Util\Paging');
+        $this->getAlbumImages(self::TEST_ALBUM_ID, self::FIRST_PAGE_NUMBER)->shouldHaveNextPage(1);
+        $this->getAlbumImages(self::TEST_ALBUM_ID, self::FIRST_PAGE_NUMBER)->shouldHavePreviousPage(1);
+        $this->getAlbumImages(self::TEST_ALBUM_ID, self::FIRST_PAGE_NUMBER)->shouldHaveCurrentPage(1);
+        $this->getAlbumImages(self::TEST_ALBUM_ID, self::FIRST_PAGE_NUMBER)->shouldHaveImages();
+    }
+
+    /**
+     * Our custom matchers
+     *
+     * @return array
+     */
+    public function getMatchers()
+    {
+        return [
+            'haveNextPage' => function ($subject, $key) {
+                return $subject->getNext() == $key;
+            },
+            'haveCurrentPage' => function ($subject, $key) {
+                return $subject->getCurrent() == $key;
+            },
+            'havePreviousPage' => function ($subject, $key) {
+                return $subject->getPrevious() == $key;
+            },
+            'haveImages' => function ($subject) {
+                $images = $subject->getRecords();
+                return ($images[0] instanceof Image) ? true : false;
+            },
+            'haveAlbums' => function ($subject) {
+                return ($subject[0] instanceof Album) ? true : false;
+            },
+        ];
     }
 }
