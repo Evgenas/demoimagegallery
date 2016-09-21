@@ -6,8 +6,7 @@ before_script:
   - composer self-update
 
 install:
-  - composer install --prefer-source --no-interaction --dev
+  - ./composer.phar install --prefer-source --no-interaction --dev
 
 script:
   - vendor/bin/phpspec run -v
-  - vendor/bin/behat -v
