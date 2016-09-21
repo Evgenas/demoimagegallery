@@ -15,5 +15,4 @@ before_script:
   - mysql -e 'create database symfony;'
 
 script:
-  - app/console server:start 0.0.0.0:8000
-  - phing build-ci
+  - phing build-ci-travis
