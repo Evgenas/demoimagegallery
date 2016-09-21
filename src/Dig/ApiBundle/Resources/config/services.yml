@@ -1,0 +1,4 @@
+services:
+  dig.album.manager:
+      class: Dig\ApiBundle\Service\AlbumManager
+      arguments: [@knp_paginator, @doctrine.orm.entity_manager]

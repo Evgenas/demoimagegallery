@@ -1,10 +1,11 @@
 {
     "name": "jekccs/demoimagegallery",
+    "description": "Demo Image Gallery",
     "license": "proprietary",
     "type": "project",
     "autoload": {
         "psr-4": {
-            "": "src/"
+            "Dig\\": "src/Dig"
         },
         "classmap": [
             "app/AppKernel.php",
@@ -12,7 +13,7 @@
         ]
     },
     "require": {
-        "php": ">=5.3.9",
+        "php": ">=5.6",
         "symfony/symfony": "2.8.*",
         "doctrine/orm": "^2.4.8",
         "doctrine/doctrine-bundle": "~1.4",
@@ -20,11 +21,23 @@
         "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0"
+        "incenteev/composer-parameter-handler": "~2.0",
+        "friendsofsymfony/rest-bundle": "^2.1",
+        "jms/serializer-bundle": "^1.1",
+        "doctrine/doctrine-fixtures-bundle": "^2.3",
+        "doctrine/doctrine-migrations-bundle": "^1.2",
+        "nelmio/api-doc-bundle": "^2.13",
+        "knplabs/knp-paginator-bundle": "^2.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
-        "symfony/phpunit-bridge": "~2.7"
+        "symfony/phpunit-bridge": "~2.7",
+        "phpspec/phpspec": "^2.5",
+        "memio/spec-gen": "^0.4",
+        "behat/behat": "3.0.*",
+        "behat/symfony2-extension": "~2.0",
+        "guzzlehttp/guzzle": "^6.2",
+        "linio/behat-web-api-extension": "^1.2"
     },
     "scripts": {
         "symfony-scripts": [

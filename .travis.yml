@@ -1,0 +1,20 @@
+language: php
+php:
+  - 5.6
+
+services:
+  - mysql
+
+before_install:
+  - pear channel-discover pear.phing.info
+  - pear install phing/phing
+  - phpenv rehash
+
+before_script:
+  - composer self-update
+  - mysql -e 'create database symfony;'
+
+script:
+  - phing build-ci-travis-1
+  - phing server-start &
+  - phing build-ci-travis-2

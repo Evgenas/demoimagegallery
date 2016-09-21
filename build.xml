@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="SkeegleApp" default="build">
+    <import file="build-base-ci.xml"/>
+    <!-- Targets -->
+    <target name="dependencies-install" description="Install dependencies via Composer">
+        <composer composer="${project.bin-composer}" command="install">
+            <arg value="--optimize-autoloader"/>
+        </composer>
+    </target>
+
+    <target name="phpunit" description="Run only unit tests with PHPUnit">
+        <!-- Read http://symfony.com/doc/current/book/testing.html for details -->
+        <exec command="./bin/phpunit -c ${project.dir-app-resources-configs-phpunit} --debug" passthru="true" checkreturn="true" logoutput="true"/>
+    </target> 
+                
+    <target name="copy-configs-ci" description="Copy configs for CI server">
+        <copy file="${project.file-config-parameters-ci}" tofile="${project.dir-app}/config/parameters.yml"
+              overwrite="true" haltonerror="true"/>
+    </target>
+
+    <target name="phpcs-ci"
+            description="Find coding standard violations in PHP source using PHP_CodeSniffer creating a log file for the continuous integration server">
+        <phpcodesniffer standard="${project.phpcs-php-standard}" encoding="UTF-8" haltonerror="false">
+            <fileset refid="src-php"/>
+            <formatter type="xml" outfile="${project.dir-build-logs}/phpcs.xml"/>
+            <formatter type="checkstyle" outfile="${project.dir-build-logs}/checkstyle-phpcs.xml"/>
+        </phpcodesniffer>
+    </target>
+ 
+    <fileset dir="${project.basedir}" id="symfony-temp">
+        <!--<include name="${project.dir-app-cache}/**"/>
+        <exclude name="${project.dir-app-cache}/.gitkeep"/>-->
+        <include name="${project.dir-app-logs}/*"/>
+        <exclude name="${project.dir-app-logs}/.gitkeep"/>
+    </fileset>
+           
+    <!-- Own Targets -->
+    <target name="build-ci" description="Builds the project  for the continuous integration server"
+            depends="clean,prepare,composer-validate,dependencies-install,check-environment,symfony-doctrine-schema-recreate,symfony-cache-clear-test,phpspec,behat"/>
+
+    <target name="build-ci-travis-1" description="Builds the project  for the continuous integration server"
+            depends="clean,prepare,composer-validate,dependencies-install"/>
+
+    <target name="build-ci-travis-2" description="Builds the project  for the continuous integration server"
+            depends="check-environment,symfony-doctrine-schema-recreate,symfony-cache-clear-test,phpspec,behat"/>
+
+    <target name="server-start"
+            description="Run web server">
+        <SymfonyConsole command="server:start" checkreturn="false">
+        </SymfonyConsole>
+    </target>
+
+    <target name="behat" description="Run behat test">
+        <exec command="${project.dir-bin}/behat --config behat.yml.dist" passthru="true" checkreturn="true" logoutput="true"/>
+    </target>
+
+    <target name="phpspec" description="Run phpSpec tests">
+        <exec command="${project.dir-bin}/phpspec run --format=pretty" passthru="true" checkreturn="true" logoutput="true"/>
+    </target>
+
+    <target name="apc-clear-test"
+            description="Clear APC cache">
+        <SymfonyConsole command="cache:accelerator:clear" checkreturn="true">
+            <arg name="env" value="test"/>
+        </SymfonyConsole>
+    </target>
+
+    <target name="apc-clear"
+            description="Clear APC cache">
+        <SymfonyConsole command="cache:accelerator:clear" checkreturn="true">
+            <arg name="env" value="dev"/>
+            <arg name="cli"/>
+        </SymfonyConsole>
+    </target>
+
+    <target name="symfony-cache-clear-test" description="Clear cache for test environment">
+        <SymfonyConsole command="cache:clear" checkreturn="true">
+            <arg name="env" value="test"/>
+            <arg name="no-debug"/>
+            <arg name="no-interaction"/>
+        </SymfonyConsole>
+    </target>
+
+    <target name="symfony-doctrine-fixtures-load-test"
+            description="Loads Doctrine data fixtures to the database">
+        <SymfonyConsole command="doctrine:fixtures:load" checkreturn="true">
+            <arg name="no-interaction"/>
+            <arg name="env" value="test"/>
+        </SymfonyConsole>
+    </target>
+
+    <target name="symfony-doctrine-schema-recreate" description="Drops and creates database schema">
+        <SymfonyConsole command="doctrine:schema:drop" checkreturn="true">
+            <arg name="no-interaction"/>
+            <arg name="force"/>
+            <arg name="env" value="test"/>
+        </SymfonyConsole>
+        <SymfonyConsole command="doctrine:schema:create" checkreturn="true">
+            <arg name="no-interaction"/>
+            <arg name="env" value="test"/>
+        </SymfonyConsole>
+    </target>
+</project>
