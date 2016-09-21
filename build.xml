@@ -38,8 +38,11 @@
     <target name="build-ci" description="Builds the project  for the continuous integration server"
             depends="clean,prepare,composer-validate,dependencies-install,check-environment,symfony-doctrine-schema-recreate,symfony-cache-clear-test,phpspec,behat"/>
 
-    <target name="build-ci-travis" description="Builds the project  for the continuous integration server"
-            depends="clean,prepare,composer-validate,dependencies-install,server-start,check-environment,symfony-doctrine-schema-recreate,symfony-cache-clear-test,phpspec,behat"/>
+    <target name="build-ci-travis-1" description="Builds the project  for the continuous integration server"
+            depends="clean,prepare,composer-validate,dependencies-install"/>
+
+    <target name="build-ci-travis-2" description="Builds the project  for the continuous integration server"
+            depends="check-environment,symfony-doctrine-schema-recreate,symfony-cache-clear-test,phpspec,behat"/>
 
     <target name="server-start"
             description="Run web server">
