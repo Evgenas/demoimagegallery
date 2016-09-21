@@ -58,11 +58,11 @@ class AlbumController extends FOSRestController
      *       "next":"1",
      *       "previous":0,
      *       "records":[
-     *          {"id":1,"file_name":"1.jpg"},
-     *          {"id":2,"file_name":"2.jpg"},
-     *          {"id":3,"file_name":"3.jpg"},
-     *          {"id":4,"file_name":"4.jpg"},
-     *          {"id":5,"file_name":"5.jpg"}
+     *          {"id":1,"image_uri":"\/images\/1.jpg"},
+     *          {"id":2,"image_uri":"\/images\/2.jpg"},
+     *          {"id":3,"image_uri":"\/images\/3.jpg"},
+     *          {"id":4,"image_uri":"\/images\/4.jpg"},
+     *          {"id":5,"image_uri":"\/images\/5.jpg"}
      *       ]}}
      *
      *
