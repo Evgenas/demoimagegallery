@@ -1,4 +1,13 @@
-demoimagegallery
+Demo Image Gallery project with CI flow
 ================
 
-A Symfony project created on September 20, 2016, 12:59 pm.
+
+##API endpoints
+
+Notes: prefix "api" is added, version control is added to url 
+
++ /api/v1  - albums list
++ /api/v1/album/:id - images list for album with id specified, page 1
++ /api/v1/album/:id/page/:page  - images list for album with id specified, page :page
+
+[API specification documentation](http://localhost:8000/apidoc) 
