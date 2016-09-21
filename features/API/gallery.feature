@@ -22,18 +22,23 @@ Feature: Image gallery
     When I send a GET request to "/api/v1/album/1"
     Then the response should be OK
      And the response should be JSON
-     And the response should contain '"name":"Album 1"'
-     And the response should contain '"current":1'
-     And the response should contain '"next":1'
-     And the response should contain '"name":"Album 1"'
+     And the response should contains '"name":"Album 1"'
+     And the response should contains '"current":1'
+     And the response should contains '"next":1'
+     And the response should contains '"previous":1'
+     And the response should contains '"name":"Album 1"'
+     And the response should contains 5 images
 
   Scenario: View images in album 2nd page
     When I send a GET request to "/api/v1/album/2/page/2"
     Then the response should be OK
      And the response should be JSON
-     And the response should contain '"name":"Album 2"'
-     And the response should contain '"current":2'
-     And the response should contain '"next":2'
+     And the response should contains '"name":"Album 2"'
+     And the response should contains '"current":2'
+     And the response should contains '"next":2'
+     And the response should contains '"previous":1'
+    And the response should contains 10 images
+
 
   Scenario: View not existed album
     When I send a GET request to "/api/v1/album/100"

@@ -134,10 +134,19 @@ class ApiFeatureContext extends WebApiContext implements KernelAwareContext, Sni
      *
      * @param string $text
      *
-     * @Then /^(?:the )?response should contain '([^']+)'$/
+     * @Then /^(?:the )?response should contains '([^']+)'$/
      */
     public function theResponseShouldContain2($text)
     {
         parent::theResponseShouldContain($text);
+    }
+
+    /**
+     * @Then the response should contains :expected images
+     */
+    public function theResponseShouldContainsImages($expected)
+    {
+        $result = json_decode($this->response->getBody());
+        Assertions::assertEquals(sizeof($result->album->records) , $expected);
     }
 }
