@@ -47,6 +47,12 @@ class AlbumManagerSpec extends ObjectBehavior
         $this->beConstructedWith($paginator, $entityManager);
     }
 
+    function it_returns_list_od_all_albums(AlbumRepository $albumRepo, Album $album)
+    {
+        $albumRepo->findAll()->willReturn([$album]);
+        $this->getAlbums()->shouldBeArray();
+    }
+
     function it_returns_album_by_its_id(AlbumRepository $albumRepo, Album $album)
     {
         $albumRepo->find(self::TEST_ALBUM_ID)->willReturn($album);

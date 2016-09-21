@@ -59,4 +59,12 @@ class AlbumManager
     {
         return $this->em->getRepository('DigApiBundle:Album')->find($albumId);
     }
+
+    /**
+     * @return Album[]
+     */
+    public function getAlbums()
+    {
+        return $this->em->getRepository('DigApiBundle:Album')->findAll();
+    }
 }
