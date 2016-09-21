@@ -21,6 +21,9 @@ class Album
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @JMS\Expose
+     * @JMS\Type("string")
      */
     private $id;
 
