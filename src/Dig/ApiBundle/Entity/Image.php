@@ -15,6 +15,8 @@ use JMS\Serializer\Annotation as JMS;
  */
 class Image
 {
+    const RELATIVE_ROOT_FILE_PATH = 'images/';
+
     /**
      * @var int
      *
@@ -99,5 +101,15 @@ class Image
     public function getAlbum()
     {
         return $this->album;
+    }
+
+    /**
+     * Relative web path to image.
+     *
+     * @return string
+     */
+    public function getFileUri()
+    {
+        return self::RELATIVE_ROOT_FILE_PATH.$this->fileName;
     }
 }
