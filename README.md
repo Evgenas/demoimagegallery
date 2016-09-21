@@ -40,4 +40,9 @@ The flow is configured for minimal CI process, requires [Phing](https://www.phin
 $phing build-ci
 ```
 
+##Continuous Integration Server
 
+Integrated with [Travis-CI](https://travis-ci.org/Evgenas/demoimagegallery)
+
+develop: ![Preview](https://travis-ci.org/Evgenas/demoimagegallery.svg?branch=develop)
+master: ![Preview](https://travis-ci.org/Evgenas/demoimagegallery.svg?branch=master)
