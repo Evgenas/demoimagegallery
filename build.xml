@@ -43,8 +43,7 @@
 
     <target name="server-start"
             description="Run web server">
-        <SymfonyConsole command="server:start" checkreturn="true">
-            <arg value="0.0.0.0:8000"/>
+        <SymfonyConsole command="server:start" checkreturn="false">
         </SymfonyConsole>
     </target>
 
