@@ -14,11 +14,21 @@ Notes: prefix "api" is added, version control is added to url
 
 ###Unit testing
 
-Instead of standart PhpUnit, it is tested with [PhpSpec BDD](http://www.phpspec.net/en/stable/) 
+Instead of standart PhpUnit, it is tested with [PhpSpec BDD](http://www.phpspec.net/en/stable/) with Prophecy as a mocker. 
 
 ```bash
 $bin/phpspec run --format=pretty
 ```
 
+![Screenshot](http://i.imgur.com/4O1ZOT8.png)
 
+###Functional testing
+
+Functional tests with [Behat BDD](http://behat.org)
+
+```bash
+$bin/behat
+```
+
+![Preview](http://i.imgur.com/2qyIf2z.png)
 
