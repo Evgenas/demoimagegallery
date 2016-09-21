@@ -13,3 +13,4 @@ default:
 
     extensions:
         Behat\Symfony2Extension: ~
+        
