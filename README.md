@@ -46,3 +46,9 @@ Integrated with [Travis-CI](https://travis-ci.org/Evgenas/demoimagegallery)
 
 develop: ![Preview](https://travis-ci.org/Evgenas/demoimagegallery.svg?branch=develop)
 master: ![Preview](https://travis-ci.org/Evgenas/demoimagegallery.svg?branch=master)
+
+##Analyze the code quality
+
+As code analizer was used InsightSensiolabs
+
+[Analyze Result](https://insight.sensiolabs.com/projects/1b2652ee-aacb-4e4f-bbf7-2e7c9cf70dde)
