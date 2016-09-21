@@ -31,7 +31,7 @@ class AlbumManager
      * @param int $albumId
      * @param int $page
      *
-     * @return array
+     * @return Paging
      */
     public function getAlbumImages($albumId, $page)
     {
