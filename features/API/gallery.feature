@@ -14,7 +14,8 @@ Feature: Image gallery
       {"id":"2","name":"Album 2"},
       {"id":"3","name":"Album 3"},
       {"id":"4","name":"Album 4"},
-      {"id":"5","name":"Album 3"}
+      {"id":"5","name":"Album 5"},
+      {"id":"6","name":"Empty Test Album 6"}
     ]}
     """
 
@@ -42,6 +43,16 @@ Feature: Image gallery
   Scenario: View not existed page on album
     When I send a GET request to "/api/v1/album/2/page/30"
     Then the response code should be 404
+
+  Scenario: View 1st page of empty album
+    When I send a GET request to "/api/v1/album/6"
+    Then the response should be OK
+    And the response should be JSON
+    And the response should contains '"name":"Empty Test Album 6"'
+    And the response should contains '"current":1'
+    And the response should contains '"next":1'
+    And the response should contains '"previous":1'
+    And the response should contains 0 images
 
   Scenario: View not existed album
     When I send a GET request to "/api/v1/album/100"

@@ -39,8 +39,13 @@ class LoadAlbumsWithImagesData extends AbstractFixture implements OrderedFixture
         ],
         4 => [
             'id' => 5,
-            'name' => 'Album 3',
+            'name' => 'Album 5',
             'images' => 'randImages(30)',
+        ],
+        5 => [
+            'id' => 6,
+            'name' => 'Empty Test Album 6',
+            'images' => [],
         ],
     ];
 

@@ -100,13 +100,24 @@ class AlbumManagerSpec extends ObjectBehavior
         $this->getAlbumImages(self::TEST_ALBUM_ID, self::SECOND_PAGE_NUMBER)->shouldHavePreviousPage(1);
         $this->getAlbumImages(self::TEST_ALBUM_ID, self::SECOND_PAGE_NUMBER)->shouldHaveImages();
 
-        // 3nd not existed page conditions
+        // 3rd page not existed conditions
         $pagination->getCurrentPageNumber()->willReturn(self::NOT_EXISTED_PAGE_NUMBER);
         $pagination->getItems()->willreturn([]);
         $paginator->paginate(Argument::any(), self::SECOND_PAGE_NUMBER, AlbumManager::IMAGES_PER_PAGE)->willReturn($pagination);
 
-        // 3rd not existed page visit
+        // 3rd page not existed  visit
         $this->getAlbumImages(self::TEST_ALBUM_ID, self::SECOND_PAGE_NUMBER)->shouldBe(false);
+
+        //empty album page conditions
+        $pagination->getCurrentPageNumber()->willReturn(self::FIRST_PAGE_NUMBER);
+        $pagination->getTotalItemCount()->willReturn(0);
+        $pagination->getItems()->willreturn([]);
+
+        //empty album page visit
+        $this->getAlbumImages(self::TEST_ALBUM_ID, self::FIRST_PAGE_NUMBER)->shouldBeAnInstanceOf('\Dig\ApiBundle\Util\Paging');
+        $this->getAlbumImages(self::TEST_ALBUM_ID, self::FIRST_PAGE_NUMBER)->shouldHaveCurrentPage(1);
+        $this->getAlbumImages(self::TEST_ALBUM_ID, self::FIRST_PAGE_NUMBER)->shouldHaveNextPage(1);
+        $this->getAlbumImages(self::TEST_ALBUM_ID, self::FIRST_PAGE_NUMBER)->shouldHavePreviousPage(1);
     }
 
     /**

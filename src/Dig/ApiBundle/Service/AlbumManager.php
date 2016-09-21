@@ -43,7 +43,7 @@ class AlbumManager
         $next = $pagination->getTotalItemCount() > (self::IMAGES_PER_PAGE * $page) ? $currentPage + 1 : $currentPage;
         $items = $pagination->getItems();
 
-        if (sizeof($items) > 0) {
+        if (sizeof($items) > 0 || $currentPage == 1) {
             $result = new Paging();
             $result->setCurrent($currentPage);
             $result->setNext($next);
