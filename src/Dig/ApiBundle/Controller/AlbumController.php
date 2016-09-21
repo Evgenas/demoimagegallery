@@ -100,6 +100,11 @@ class AlbumController extends FOSRestController
         }
 
         $paging = $manager->getAlbumImages($id, $page);
+
+        if (empty($paging)) {
+            throw new NotFoundHttpException(sprintf('Page %d for entity with id %d not found.', $page, $id));
+        }
+
         $paging->setName($album->getName());
         $answer['album'] = $paging;
 

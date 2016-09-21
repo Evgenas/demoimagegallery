@@ -39,6 +39,9 @@ Feature: Image gallery
      And the response should contains '"previous":1'
     And the response should contains 10 images
 
+  Scenario: View not existed page on album
+    When I send a GET request to "/api/v1/album/2/page/30"
+    Then the response code should be 404
 
   Scenario: View not existed album
     When I send a GET request to "/api/v1/album/100"

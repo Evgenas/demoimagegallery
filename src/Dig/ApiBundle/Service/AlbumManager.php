@@ -41,13 +41,17 @@ class AlbumManager
         $currentPage = (int) $pagination->getCurrentPageNumber();
         $previous = (int) (1 === $currentPage ? 1 : $currentPage - 1);
         $next = $pagination->getTotalItemCount() > (self::IMAGES_PER_PAGE * $page) ? $currentPage + 1 : $currentPage;
-        $result = new Paging();
-        $result->setCurrent($currentPage);
-        $result->setNext($next);
-        $result->setPrevious($previous);
-        $result->setRecords($pagination->getItems());
+        $items = $pagination->getItems();
 
-        return $result;
+        if (sizeof($items) > 0) {
+            $result = new Paging();
+            $result->setCurrent($currentPage);
+            $result->setNext($next);
+            $result->setPrevious($previous);
+            $result->setRecords($items);
+        }
+
+        return isset($result) ? $result : false;
     }
 
     /**

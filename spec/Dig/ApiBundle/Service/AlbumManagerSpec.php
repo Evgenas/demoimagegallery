@@ -19,6 +19,7 @@ class AlbumManagerSpec extends ObjectBehavior
     const TEST_ALBUM_ID = 1;
     const FIRST_PAGE_NUMBER = 1;
     const SECOND_PAGE_NUMBER = 2;
+    const NOT_EXISTED_PAGE_NUMBER = 3;
     const IMAGES_AMOUNT_IN_ALBUM = 11;
 
     function it_is_initializable()
@@ -41,7 +42,7 @@ class AlbumManagerSpec extends ObjectBehavior
         }
         $pagination->getItems()->willreturn($images);
         $pagination->getTotalItemCount()->willReturn(self::IMAGES_AMOUNT_IN_ALBUM);
-        
+
         // it is impossible to mock final class of Doctrine\ORM\Query so using Argument::any
         // @link: https://github.com/phpspec/prophecy/issues/102
         //$iamgeRepo->getAlbumWithImagesSearchQuery(self::TEST_ALBUM_ID)->willReturn($searchQuery);
@@ -98,6 +99,14 @@ class AlbumManagerSpec extends ObjectBehavior
         $this->getAlbumImages(self::TEST_ALBUM_ID, self::SECOND_PAGE_NUMBER)->shouldHaveNextPage(2);
         $this->getAlbumImages(self::TEST_ALBUM_ID, self::SECOND_PAGE_NUMBER)->shouldHavePreviousPage(1);
         $this->getAlbumImages(self::TEST_ALBUM_ID, self::SECOND_PAGE_NUMBER)->shouldHaveImages();
+
+        // 3nd not existed page conditions
+        $pagination->getCurrentPageNumber()->willReturn(self::NOT_EXISTED_PAGE_NUMBER);
+        $pagination->getItems()->willreturn([]);
+        $paginator->paginate(Argument::any(), self::SECOND_PAGE_NUMBER, AlbumManager::IMAGES_PER_PAGE)->willReturn($pagination);
+
+        // 3rd not existed page visit
+        $this->getAlbumImages(self::TEST_ALBUM_ID, self::SECOND_PAGE_NUMBER)->shouldBe(false);
     }
 
     /**
