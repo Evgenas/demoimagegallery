@@ -18,6 +18,7 @@ class AlbumManagerSpec extends ObjectBehavior
 {
     const TEST_ALBUM_ID = 1;
     const FIRST_PAGE_NUMBER = 1;
+    const IMAGES_AMOUNT_IN_ALBUM = 12;
 
     function it_is_initializable()
     {
@@ -34,8 +35,12 @@ class AlbumManagerSpec extends ObjectBehavior
     )
     {
         $pagination->getCurrentPageNumber()->willReturn(self::FIRST_PAGE_NUMBER);
-        $pagination->getTotalItemCount()->willReturn(1);
-        $pagination->getItems()->willreturn([$image]);
+        for($i=0;$i < AlbumManager::IMAGES_PER_PAGE; $i++) {
+            $images[] = $image;
+        }
+        $pagination->getItems()->willreturn($images);
+        $pagination->getTotalItemCount()->willReturn(self::IMAGES_AMOUNT_IN_ALBUM);
+
 
         // it is impossible to mock final class of Doctrine\ORM\Query so using Argument::any
         // @link: https://github.com/phpspec/prophecy/issues/102
@@ -72,9 +77,9 @@ class AlbumManagerSpec extends ObjectBehavior
         $pagination->getItems()->shouldBeCalled();
 
         $this->getAlbumImages(self::TEST_ALBUM_ID, self::FIRST_PAGE_NUMBER)->shouldBeAnInstanceOf('\Dig\ApiBundle\Util\Paging');
-        $this->getAlbumImages(self::TEST_ALBUM_ID, self::FIRST_PAGE_NUMBER)->shouldHaveNextPage(1);
-        $this->getAlbumImages(self::TEST_ALBUM_ID, self::FIRST_PAGE_NUMBER)->shouldHavePreviousPage(1);
         $this->getAlbumImages(self::TEST_ALBUM_ID, self::FIRST_PAGE_NUMBER)->shouldHaveCurrentPage(1);
+        $this->getAlbumImages(self::TEST_ALBUM_ID, self::FIRST_PAGE_NUMBER)->shouldHaveNextPage(2);
+        $this->getAlbumImages(self::TEST_ALBUM_ID, self::FIRST_PAGE_NUMBER)->shouldHavePreviousPage(1);
         $this->getAlbumImages(self::TEST_ALBUM_ID, self::FIRST_PAGE_NUMBER)->shouldHaveImages();
     }
 
