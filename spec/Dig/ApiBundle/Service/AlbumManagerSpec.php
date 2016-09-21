@@ -41,8 +41,7 @@ class AlbumManagerSpec extends ObjectBehavior
         }
         $pagination->getItems()->willreturn($images);
         $pagination->getTotalItemCount()->willReturn(self::IMAGES_AMOUNT_IN_ALBUM);
-
-
+        
         // it is impossible to mock final class of Doctrine\ORM\Query so using Argument::any
         // @link: https://github.com/phpspec/prophecy/issues/102
         //$iamgeRepo->getAlbumWithImagesSearchQuery(self::TEST_ALBUM_ID)->willReturn($searchQuery);
