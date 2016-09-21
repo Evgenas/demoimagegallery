@@ -13,6 +13,15 @@ class AlbumController extends FOSRestController
     /**
      * Get all albums.
      *
+     * Response example:
+     * {"albums":[
+     *      {"id":"1","name":"Album 1"},
+     *      {"id":"2","name":"Album 2"},
+     *      {"id":"3","name":"Album 3"},
+     *      {"id":"4","name":"Album 4"},
+     *      {"id":"5","name":"Album 3"}
+     * ]}
+     * 
      * @ApiDoc(
      *   section = "Albums",
      *   description = "Get all albums",
