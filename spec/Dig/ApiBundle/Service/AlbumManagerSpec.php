@@ -8,6 +8,7 @@ use Dig\ApiBundle\Repository\AlbumRepository;
 use Dig\ApiBundle\Repository\ImageRepository;
 use Dig\ApiBundle\Service\AlbumManager;
 use Doctrine\Common\Persistence\ObjectManager;
+use Knp\Component\Pager\Pagination\AbstractPagination;
 use Knp\Component\Pager\Paginator;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -47,7 +48,7 @@ class AlbumManagerSpec extends ObjectBehavior
         $this->beConstructedWith($paginator, $entityManager);
     }
 
-    function it_returns_list_od_all_albums(AlbumRepository $albumRepo, Album $album)
+    function it_returns_list_of_all_albums(AlbumRepository $albumRepo, Album $album)
     {
         $albumRepo->findAll()->willReturn([$album]);
         $this->getAlbums()->shouldBeArray();
@@ -59,8 +60,14 @@ class AlbumManagerSpec extends ObjectBehavior
         $this->getAlbum(self::TEST_ALBUM_ID)->shouldBeAnInstanceOf('\Dig\ApiBundle\Entity\Album');
     }
 
-    function it_returns_album_images_paginated()
+    function it_returns_album_images_paginated(ImageRepository $imageRepo, Paginator $paginator, AbstractPagination $pagination)
     {
+        $imageRepo->getAlbumWithImagesSearchQuery(self::TEST_ALBUM_ID)->shouldBeCalled();
+        $paginator->paginate(Argument::any(), self::FIRST_PAGE_NUMBER, AlbumManager::IMAGES_PER_PAGE)->shouldBeCalled();
+        $pagination->getCurrentPageNumber()->shouldBeCalled();
+        $pagination->getTotalItemCount()->shouldBeCalled();
+        $pagination->getItems()->shouldBeCalled();
+
         $this->getAlbumImages(self::TEST_ALBUM_ID, self::FIRST_PAGE_NUMBER)->shouldBeAnInstanceOf('\Dig\ApiBundle\Util\Paging');
     }
 }
