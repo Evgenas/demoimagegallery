@@ -38,6 +38,14 @@ class Paging
     }
 
     /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
      * @param int $current
      */
     public function setCurrent($current)
